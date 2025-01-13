@@ -1,0 +1,299 @@
+SQL (Structured Query Language) - это язык программирования, который используется для
+управления и работы с реляционными базами данных. Вот некоторые из основных возможностей
+ работы с SQL:
+
+1. **Создание базы данных**: SQL позволяет создавать новые базы данных с помощью команды
+`CREATE DATABASE`.
+
+2. **Создание таблицы**: SQL позволяет создавать новые таблицы в базе данных с помощью команды
+`CREATE TABLE`.
+
+3. **Вставка данных**: SQL позволяет вставлять данные в таблицу с помощью команды
+`INSERT INTO`.
+
+4. **Выборка данных**: SQL позволяет выбирать данные из таблицы с помощью команды
+`SELECT`.
+
+5. **Обновление данных**: SQL позволяет обновлять данные в таблице с помощью команды
+`UPDATE`.
+
+6. **Удаление данных**: SQL позволяет удалять данные из таблицы с помощью команды
+ `DELETE`.
+
+7. **Создание индексов**: SQL позволяет создавать индексы для ускорения поиска данных с помощью
+команды `CREATE INDEX`.
+
+8. **Создание представлений**: SQL позволяет создавать представления, которые являются
+виртуальными таблицами, основанными на результатах запроса, с помощью команды `CREATE VIEW`.
+
+9. **Создание хранимых процедур**: SQL позволяет создавать хранимые процедуры, которые
+представляют собой набор SQL-команд, которые можно вызвать по имени, с помощью команды
+`CREATE PROCEDURE`.
+
+10. **Создание триггеров**: SQL позволяет создавать триггеры, которые автоматически
+выполняются при определенных событиях, таких как вставка, обновление или удаление данных,
+с помощью команды `CREATE TRIGGER`.
+
+11. **Создание ограничений**: SQL позволяет создавать ограничения, такие как первичные ключи,
+ внешние ключи, уникальные ограничения и ограничения проверки, с помощью команды `ALTER TABLE`.
+
+12. **Создание транзакций**: SQL позволяет создавать транзакции, которые представляют
+ собой набор SQL-команд, которые должны быть выполнены как единое целое, с помощью команды
+ `BEGIN TRANSACTION`.
+
+13. **Создание функций**: SQL позволяет создавать функции, которые могут быть использованы
+ в запросах, с помощью команды `CREATE FUNCTION`.
+
+14. **Создание последовательностей**: SQL позволяет создавать последовательности, которые
+ генерируют уникальные числа, с помощью команды `CREATE SEQUENCE`.
+
+15. **Создание схем**: SQL позволяет создавать схемы, которые представляют собой
+ коллекцию объектов базы данных, с помощью команды `CREATE SCHEMA`.
+
+16. **Создание ролей**: SQL позволяет создавать роли, которые представляют собой набор
+привилегий, которые могут быть назначены пользователям, с помощью команды `CREATE ROLE`.
+
+17. **Создание пользователей**: SQL позволяет создавать пользователей, которые могут быть
+использованы для доступа к базе данных, с помощью команды `CREATE USER`.
+
+18. **Создание синонимов**: SQL позволяет создавать синонимы, которые представляют собой
+ альтернативные имена для объектов базы данных, с помощью команды `CREATE SYNONYM`.
+
+19. **Создание типов данных**: SQL позволяет создавать пользовательские типы данных, с
+помощью команды `CREATE TYPE`.
+
+20. **Создание доменов**: SQL позволяет создавать домены, которые представляют собой
+определение типа данных с ограничениями, с помощью команды `CREATE DOMAIN`.
+
+21. **Создание каталогов**: SQL позволяет создавать каталоги, которые представляют
+собой коллекцию объектов базы данных, с помощью команды `CREATE CATALOG`.
+
+Работа с базами данных в Python обычно включает в себя широкое использование различные методов для выполнения операций с данными. Для начала давайте рассмотрим основные методы работы с базами данных, используя примеры на Python с библиотекой `sqlite3`, а также на примере `psycopg2` для PostgreSQL, так как они широко распространены.
+
+### Основные операции с базами данных
+
+1. **Создание базы данных и таблиц**
+2. **Вставка данных**
+3. **Запрос данных**
+4. **Обновление данных**
+5. **Удаление данных**
+6. **Закрытие соединения**
+
+### 1. Создание базы данных и таблиц
+
+**SQLite:**
+
+```python
+import sqlite3
+
+# Создание или подключение к базе данных
+conn = sqlite3.connect('example.db')
+cursor = conn.cursor()
+
+# Создание таблицы
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    age INTEGER
+)
+''')
+
+conn.commit()
+conn.close()
+```
+
+**PostgreSQL:**
+
+```python
+import psycopg2
+
+# Подключение к базе данных
+conn = psycopg2.connect("dbname='example' user='youruser' password='yourpass'")
+cursor = conn.cursor()
+
+# Создание таблицы
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INTEGER
+)
+''')
+
+conn.commit()
+conn.close()
+```
+
+### 2. Вставка данных
+
+**SQLite:**
+
+```python
+conn = sqlite3.connect('example.db')
+cursor = conn.cursor()
+
+# Вставка данных
+cursor.execute("INSERT INTO users (name, age) VALUES ('Alice', 30)")
+cursor.execute("INSERT INTO users (name, age) VALUES ('Bob', 25)")
+
+conn.commit()
+conn.close()
+```
+
+**PostgreSQL:**
+
+```python
+conn = psycopg2.connect("dbname='example' user='youruser' password='yourpass'")
+cursor = conn.cursor()
+
+# Вставка данных
+cursor.execute("INSERT INTO users (name, age) VALUES (%s, %s)", ('Alice', 30))
+cursor.execute("INSERT INTO users (name, age) VALUES (%s, %s)", ('Bob', 25))
+
+conn.commit()
+conn.close()
+```
+
+### 3. Запрос данных
+
+**SQLite:**
+
+```python
+conn = sqlite3.connect('example.db')
+cursor = conn.cursor()
+
+cursor.execute("SELECT * FROM users")
+rows = cursor.fetchall()
+for row in rows:
+    print(row)
+
+conn.close()
+```
+
+**PostgreSQL:**
+
+```python
+conn = psycopg2.connect("dbname='example' user='youruser' password='yourpass'")
+cursor = conn.cursor()
+
+cursor.execute("SELECT * FROM users")
+rows = cursor.fetchall()
+for row in rows:
+    print(row)
+
+conn.close()
+```
+
+### 4. Обновление данных
+
+**SQLite:**
+
+```python
+conn = sqlite3.connect('example.db')
+cursor = conn.cursor()
+
+# Обновление данных
+cursor.execute("UPDATE users SET age = ? WHERE name = ?", (31, 'Alice'))
+
+conn.commit()
+conn.close()
+```
+
+**PostgreSQL:**
+
+```python
+conn = psycopg2.connect("dbname='example' user='youruser' password='yourpass'")
+cursor = conn.cursor()
+
+# Обновление данных
+cursor.execute("UPDATE users SET age = %s WHERE name = %s", (31, 'Alice'))
+
+conn.commit()
+conn.close()
+```
+
+### 5. Удаление данных
+
+**SQLite:**
+
+```python
+conn = sqlite3.connect('example.db')
+cursor = conn.cursor()
+
+# Удаление данных
+cursor.execute("DELETE FROM users WHERE name = ?", ('Bob',))
+
+conn.commit()
+conn.close()
+```
+
+**PostgreSQL:**
+
+```python
+conn = psycopg2.connect("dbname='example' user='youruser' password='yourpass'")
+cursor = conn.cursor()
+
+# Удаление данных
+cursor.execute("DELETE FROM users WHERE name = %s", ('Bob',))
+
+conn.commit()
+conn.close()
+```
+
+### 6. Закрытие соединения
+
+Важно всегда закрывать соединение с базой данных после завершения операций.
+
+```python
+conn.close()  # Закрытие соединения
+```
+
+### Общие методы работы с курсором
+
+- **`fetchone()`**: Извлечение одной строки из результата запроса.
+- **`fetchall()`**: Извлечение всех строк из результата запроса.
+- **`fetchmany(size)`**: Извлечение указанного количества строк из результата запроса.
+
+### Пример использования `fetchone()` и `fetchmany()`
+
+**SQLite:**
+
+```python
+conn = sqlite3.connect('example.db')
+cursor = conn.cursor()
+
+cursor.execute("SELECT * FROM users")
+
+# Извлечение одной строки
+row = cursor.fetchone()
+print(row)
+
+# Извлечение нескольких строк
+rows = cursor.fetchmany(2)
+for row in rows:
+    print(row)
+
+conn.close()
+```
+
+**PostgreSQL:**
+
+```python
+conn = psycopg2.connect("dbname='example' user='youruser' password='yourpass'")
+cursor = conn.cursor()
+
+cursor.execute("SELECT * FROM users")
+
+# Извлечение одной строки
+row = cursor.fetchone()
+print(row)
+
+# Извлечение нескольких строк
+rows = cursor.fetchmany(2)
+for row in rows:
+    print(row)
+
+conn.close()
+```
+
