@@ -7,7 +7,7 @@ import asyncio
 from module14.crud_functions import *
 
 
-TOKEN="8147665151:AAEdxNXUokCPn19gK1ZlsC1ie2toYMRrVWE"
+TOKEN=" "
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 users = get_all_products()
